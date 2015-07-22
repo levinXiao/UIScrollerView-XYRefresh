@@ -15,6 +15,8 @@
 		B8A279D21B5F32D100C49A87 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B8A279D01B5F32D100C49A87 /* LaunchScreen.storyboard */; };
 		B8A279DD1B5F32D100C49A87 /* XYRefreshTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A279DC1B5F32D100C49A87 /* XYRefreshTests.m */; };
 		B8A279E81B5F32D100C49A87 /* XYRefreshUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A279E71B5F32D100C49A87 /* XYRefreshUITests.m */; };
+		B8A279FD1B5F36E600C49A87 /* RefreshBubble.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B8A279FA1B5F36E600C49A87 /* RefreshBubble.xcassets */; };
+		B8A279FE1B5F36E600C49A87 /* UIScrollView+XYRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = B8A279FC1B5F36E600C49A87 /* UIScrollView+XYRefresh.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,9 @@
 		B8A279E31B5F32D100C49A87 /* XYRefreshUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XYRefreshUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8A279E71B5F32D100C49A87 /* XYRefreshUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XYRefreshUITests.m; sourceTree = "<group>"; };
 		B8A279E91B5F32D100C49A87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B8A279FA1B5F36E600C49A87 /* RefreshBubble.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = RefreshBubble.xcassets; sourceTree = "<group>"; };
+		B8A279FB1B5F36E600C49A87 /* UIScrollView+XYRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+XYRefresh.h"; sourceTree = "<group>"; };
+		B8A279FC1B5F36E600C49A87 /* UIScrollView+XYRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+XYRefresh.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +106,7 @@
 		B8A279C11B5F32D100C49A87 /* XYRefresh */ = {
 			isa = PBXGroup;
 			children = (
+				B8A279F91B5F36E600C49A87 /* UIScrollView+XYRefresh */,
 				B8A279C51B5F32D100C49A87 /* AppDelegate.h */,
 				B8A279C61B5F32D100C49A87 /* AppDelegate.m */,
 				B8A279C81B5F32D100C49A87 /* ViewController.h */,
@@ -138,6 +144,16 @@
 				B8A279E91B5F32D100C49A87 /* Info.plist */,
 			);
 			path = XYRefreshUITests;
+			sourceTree = "<group>";
+		};
+		B8A279F91B5F36E600C49A87 /* UIScrollView+XYRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				B8A279FA1B5F36E600C49A87 /* RefreshBubble.xcassets */,
+				B8A279FB1B5F36E600C49A87 /* UIScrollView+XYRefresh.h */,
+				B8A279FC1B5F36E600C49A87 /* UIScrollView+XYRefresh.m */,
+			);
+			path = "UIScrollView+XYRefresh";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B8A279D21B5F32D100C49A87 /* LaunchScreen.storyboard in Resources */,
+				B8A279FD1B5F36E600C49A87 /* RefreshBubble.xcassets in Resources */,
 				B8A279CF1B5F32D100C49A87 /* Assets.xcassets in Resources */,
 				B8A279CD1B5F32D100C49A87 /* Main.storyboard in Resources */,
 			);
@@ -272,6 +289,7 @@
 			files = (
 				B8A279CA1B5F32D100C49A87 /* ViewController.m in Sources */,
 				B8A279C71B5F32D100C49A87 /* AppDelegate.m in Sources */,
+				B8A279FE1B5F36E600C49A87 /* UIScrollView+XYRefresh.m in Sources */,
 				B8A279C41B5F32D100C49A87 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

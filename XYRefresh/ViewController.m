@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "UIScrollView+XYRefresh.h"
 
-@interface ViewController ()
+@interface ViewController () <UITableViewDataSource,UITableViewDelegate>{
+    UITableView *table;
+}
 
 @end
 
@@ -17,6 +20,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    table = [[UITableView alloc] initWithFrame:(CGRect){0,120,self.view.bounds.size.width,self.view.bounds.size.height-240} style:UITableViewStylePlain];
+    [self.view addSubview:table];
+//    table.backgroundColor = [UIColor redColor];
+    
+    table.dataSource = self;
+    table.delegate = self;
+    table.rowHeight = 44;
+    [table initDownRefresh];
+    [table setDownRefreshBlock:^(id refreshView){
+        [refreshView endDownRefresh];
+    }];
+    
+    [table initPullUpRefresh];
+    table.pullUpRefreshBlock = ^(id refreshView){
+        [refreshView endPullUpRefresh];
+    };
+}
+
+-(NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 50;
+}
+
+-(UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
+    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"1"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%ld",indexPath.row];
+    return cell;
 }
 
 - (void)didReceiveMemoryWarning {
