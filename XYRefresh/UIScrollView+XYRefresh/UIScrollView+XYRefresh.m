@@ -11,7 +11,7 @@
 
 @implementation UIScrollView (XYRefresh)
 
-static float refreshActiveHeight_down = 72.5;
+static float refreshActiveHeight_down = 87.5;
 static float refreshViewHeight_down = 15;
 
 //static float refreshActiveHeight_pull = 87.5;
@@ -224,24 +224,30 @@ static float refreshViewHeightAlign = 8;
 }
 
 -(void)endDownRefresh{
-    [self.inBubbleView_down.layer removeAllAnimations];
-    [self.outBubbleView_down.layer removeAllAnimations];
-    [UIView animateWithDuration:0.4f animations:^{
-        self.contentInset = UIEdgeInsetsZero;
-    }];
-    [UIView animateWithDuration:0.7f animations:^{
-        self.inBubbleView_down.alpha = 0.0;
-        self.outBubbleView_down.alpha = 0.0;
-    }completion:^(BOOL finished) {
-        [self.inBubbleView_down.layer removeAllAnimations];
-        [self.outBubbleView_down.layer removeAllAnimations];
-        self.isDownRefrshing = NO;
-        [self initDownRefresh];
-    }];
+    if (!self.isDownRefrshing) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.4f animations:^{
+            self.contentInset = UIEdgeInsetsZero;
+        }completion:^(BOOL finished) {
+            [self.inBubbleView_down.layer removeAllAnimations];
+            [self.outBubbleView_down.layer removeAllAnimations];
+        }];
+        [UIView animateWithDuration:0.7f animations:^{
+            self.inBubbleView_down.alpha = 0.0f;
+            self.outBubbleView_down.alpha = 0.0f;
+        }completion:^(BOOL finished) {
+            [self.inBubbleView_down.layer removeAllAnimations];
+            [self.outBubbleView_down.layer removeAllAnimations];
+            self.isDownRefrshing = NO;
+            [self initDownRefresh];
+        }];
+    });
 }
 
 
-#pragma mark ———————————————————————————————— 
+#pragma mark ————————————————————————————————
 #pragma mark 上拉刷新
 #pragma mark ————————————————————————————————
 #pragma mark 设置变量
@@ -454,19 +460,25 @@ static float refreshViewHeightAlign = 8;
 }
 
 -(void)endPullUpRefresh{
-    [self.inBubbleView_pull.layer removeAllAnimations];
-    [self.outBubbleView_pull.layer removeAllAnimations];
-    [UIView animateWithDuration:0.7f animations:^{
-        self.inBubbleView_pull.alpha = 0.0;
-        self.outBubbleView_pull.alpha = 0.0;
-        self.contentInset = UIEdgeInsetsZero;
-    }completion:^(BOOL finished) {
-        [self.inBubbleView_pull.layer removeAllAnimations];
-        [self.outBubbleView_pull.layer removeAllAnimations];
-        [self.outBubbleView_pull removeFromSuperview];
-        [self.inBubbleView_pull removeFromSuperview];
-        self.isPullUpRefreshing = NO;
-    }];
+    if (!self.isPullUpRefreshing) {
+        return;
+    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:0.4f animations:^{
+            self.contentInset = UIEdgeInsetsZero;
+        } completion:^(BOOL finished) {
+            [self.inBubbleView_pull.layer removeAllAnimations];
+            [self.outBubbleView_pull.layer removeAllAnimations];
+        }];
+        [UIView animateWithDuration:0.7f animations:^{
+            self.inBubbleView_pull.alpha = 0.0;
+            self.outBubbleView_pull.alpha = 0.0;
+        }completion:^(BOOL finished) {
+            [self.outBubbleView_pull removeFromSuperview];
+            [self.inBubbleView_pull removeFromSuperview];
+            self.isPullUpRefreshing = NO;
+        }];
+    });
 }
 
 #pragma mark ————————————————————————————————
@@ -551,6 +563,8 @@ static float refreshViewHeightAlign = 8;
             float maxMove = refreshActiveHeight_down-refreshViewHeight_down-refreshViewHeightAlign;
             float offsetMove = MIN(-point.y,maxMove);
             if (self.contentInset.top != 30){
+                self.inBubbleView_down.alpha = 1.f;
+                self.outBubbleView_down.alpha = 1.f;
                 self.outBubbleView_down.frame = CGRectMake((self.frame.size.width-refreshViewHeight_down)/2,-refreshActiveHeight_down + offsetMove,refreshViewHeight_down,refreshViewHeight_down);
             }
             if (offsetMove == maxMove) {
@@ -575,7 +589,7 @@ static float refreshViewHeightAlign = 8;
     }else{
         if (self.isPullUpRefreshInit) {
             CGFloat moveOffsetY = point.y + self.bounds.size.height - self.contentSize.height;
-//            NSLog(@"%.2f,%.2f,%.2f ,%.2f",point.y,self.bounds.size.height,self.contentSize.height,moveOffsetY);
+            //            NSLog(@"%.2f,%.2f,%.2f ,%.2f",point.y,self.bounds.size.height,self.contentSize.height,moveOffsetY);
             if (moveOffsetY < 0) {
                 [self backToNormalPullUpState];
                 return;
@@ -621,7 +635,7 @@ static float refreshViewHeightAlign = 8;
             if (self.isOpacityAdded_pull && moveOffsetY < 70 && ![self.outBubbleView_pull.layer animationForKey:@"UIScrollView_PullUpRefresh_XY_RedOpacityAnimation"]) {
                 self.isOpacityAdded_pull = NO;
             }
-
+            
         }
     }
 }
