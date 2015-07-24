@@ -216,6 +216,10 @@ static float refreshViewHeightAlign = 8;
         [self.inBubbleView_down.layer addAnimation:self.inposAnimation_down forKey:@"UIScrollView_DownRefresh_XY_PosAnimation_AnimationKey"];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (self.isPullUpRefreshing) {
+                self.isDownRefrshing = NO;
+                return;
+            }
             if (self.downRefreshBlock) {
                 self.downRefreshBlock(self);
             }
@@ -441,6 +445,10 @@ static float refreshViewHeightAlign = 8;
         [self.inBubbleView_pull.layer addAnimation:self.inposAnimation_pull forKey:@"UIScrollView_PullUpRefresh_XY_PosAnimation_AnimationKey"];
         
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            if (self.isDownRefrshing) {
+                self.isPullUpRefreshing = NO;
+                return;
+            }
             if (self.pullUpRefreshBlock) {
                 self.pullUpRefreshBlock(self);
             }
