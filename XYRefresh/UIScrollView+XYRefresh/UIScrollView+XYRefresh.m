@@ -149,6 +149,10 @@ static float refreshViewHeightAlign = 8;
 -(void)initDownRefreshBubbleView{
     [self.inBubbleView_down.layer removeAllAnimations];
     [self.outBubbleView_down.layer removeAllAnimations];
+    
+    [self.inBubbleView_down removeFromSuperview];
+    [self.outBubbleView_down removeFromSuperview];
+    
     self.inBubbleView_down = [[UIImageView alloc] init];
     self.inBubbleView_down.frame = (CGRect){(int)((self.frame.size.width-refreshViewHeight_down)/2),-15-refreshViewHeightAlign,refreshViewHeight_down,refreshViewHeight_down};
     self.inBubbleView_down.alpha = 1.f;
@@ -384,6 +388,10 @@ static float refreshViewHeightAlign = 8;
 -(void)initPullUpRefreshBubbleView{
     [self.inBubbleView_pull.layer removeAllAnimations];
     [self.outBubbleView_pull.layer removeAllAnimations];
+    
+    [self.inBubbleView_pull removeFromSuperview];
+    [self.outBubbleView_pull removeFromSuperview];
+    
     self.inBubbleView_pull = [[UIImageView alloc] init];
     self.inBubbleView_pull.alpha = 1.f;
     [self.inBubbleView_pull setImage:[UIImage imageNamed:@"refreshBubble_blue"]];
@@ -553,6 +561,18 @@ static float refreshViewHeightAlign = 8;
             [self.inBubbleView_pull.layer setPosition:[self.inposAnimation_pull.toValue CGPointValue]];
             return;
         }
+    }
+}
+
+-(void)dealloc{
+    @try {
+        [self removeObserver:self forKeyPath:@"contentOffset"];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"%@",exception);
+    }
+    @finally {
+        
     }
 }
 
