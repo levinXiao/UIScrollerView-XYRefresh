@@ -20,7 +20,7 @@ typedef void (^DownRefreshBlockIn)(id refreshView);
 
 #pragma mark -
 #pragma mark --下拉刷新构造函数
--(void)initDownRefreshCompletion:(DownRefreshBlockIn)completion;
+-(void)initDownRefreshCompletion:(void (^)(id refreshView))completion;
 -(void)initDownRefresh;
 #pragma mark --下拉刷新结束函数
 -(void)endDownRefresh;
@@ -28,7 +28,7 @@ typedef void (^DownRefreshBlockIn)(id refreshView);
 
 #pragma mark -
 #pragma mark --上拉刷新构造函数
--(void)initPullUpRefreshCompletion:(PullUpRefreshBlockIn)completion;
+-(void)initPullUpRefreshCompletion:(void (^)(id refreshView))completion;
 -(void)initPullUpRefresh;
 #pragma mark --上拉刷新结束函数
 -(void)endPullUpRefresh;
